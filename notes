@@ -1,0 +1,3 @@
+[Scraping]
+It seems like Predictit has a very simple pattern for markets and individual contracts. I'll focus on just pulling individual contracts at first, I think I can pull the market from them. Pass the filelist to wget -i -P `date|tr -d ' '` and I've got an auto-logging system. I'll need to attach this to a chronjob to keep pulling it, then probably alert a python script to clean up the data. No need to actually keep 90% of what I pull. 
+In fact, eventually I should look into just pulling the JSON files, and saving the effort of pulling full web pages I don't actually need. But, predictit promises they are working on a real API, so I don't know that I'm willing to put more than a little bit of effort into optimizing the scraping
