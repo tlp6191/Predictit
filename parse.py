@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import re,sqlite3,sys,glob
 if len(sys.argv)>2:
   date=sys.argv[1]
-  dir=sys.argv[2]+"data-"+date
+  dir=sys.argv[2]+"/data-"+date
 else:
   print "Requires arguments"
 con=sqlite3.connect(sys.argv[2]+"/contracts.db")
