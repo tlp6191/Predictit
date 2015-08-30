@@ -1,17 +1,17 @@
 #!/usr/bin/python
 from bs4 import BeautifulSoup
 import re,sqlite3,sys,glob
-con=sqlite3.connect("contracts.db")
+if len(sys.argv)>2:
+  date=sys.argv[1]
+  dir=sys.argv[2]+"data-"+date
+else:
+  print "Requires arguments"
+con=sqlite3.connect(sys.argv[2]+"/contracts.db")
 cur=con.cursor()
 cur.execute("create table if not exists contracts (id integer primary key autoincrement,sym varchar unique, start, end)")
 cur.execute("create table if not exists contract_data (id INTEGER primary key autoincrement,sym_id INTEGER,date INTEGER,traded INTEGER,volume INTEGER,total_shares INTEGER,todays_change REAL)")
 cur.execute("create table if not exists offers (id INTEGER primary key autoincrement,sym_id INTEGER,date INTEGER,price INTEGER,count INTEGER,yes NUMBERIC, buy NUMBERIC)")#The yes column is 1 for yes offers, 0 for no offers. Same for buy
 
-if len(sys.argv)>1:
-  date=sys.argv[1]
-else:
-  date="SatAug2910:49:59CDT2015"
-dir="data-"+date
 for file in glob.glob(dir+"/SingleOption*"):
   try:
     with open(file,"r") as myfile:
