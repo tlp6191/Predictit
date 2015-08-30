@@ -2,9 +2,11 @@
 date=$(date +%s | tr -d ' ')
 
 dir=data-$date
-mkdir $dir
-wget -i filelist -P $dir &> $dir/wget.log 
-grep "Shares Traded" $dir/* -l >$dir/valid
-grep "Shares Traded" $dir/* -L >$dir/invalid
-`dirname $0`/parse.py $date
-rm $dir/SingleOption*
+localdir=`dirname $0`
+mkdir $localdir/$dir
+wget -i $localdir/filelist -P $localdir/$dir &> $localdir/$dir/wget.log 
+grep "Shares Traded" $localdir/$dir/* -l >$localdir/$dir/valid
+grep "Shares Traded" $localdir/$dir/* -L >$localdir/$dir/invalid
+$localdir/parse.py $date
+rm $localdir/$dir/SingleOption*
+$localdir/recal_filelist.py $date >$localdir/filelist
