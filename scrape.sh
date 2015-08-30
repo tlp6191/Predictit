@@ -9,5 +9,5 @@ grep "Shares Traded" $localdir/$dir/* -l |xargs grep "Buy Yes" -l >$localdir/$di
 grep "Shares Traded" $localdir/$dir/* -l |xargs grep "Buy Yes" -l >$localdir/$dir/active
 grep "Shares Traded" $localdir/$dir/* -L >$localdir/$dir/invalid
 $localdir/parse.py $date $localdir
-#rm $localdir/$dir/SingleOption*
+rm $localdir/$dir/SingleOption*
 $localdir/recal_filelist.py $date $localdir/data-$date >$localdir/filelist
