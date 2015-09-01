@@ -69,5 +69,6 @@ for file in glob.glob(dir+"/SingleOption*"):
       print "Symbol "+sym+" seems not to be trading"
   except:
     print "File "+str(file)+" seems to have no usable stock data. Maybe we needed to filter it?"
+
 con.commit()
 con.close()
