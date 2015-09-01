@@ -7,6 +7,18 @@ cur=con.cursor()
 #Parse through for zero-sum stocks
 cur.execute("select sym from contracts")
 syms=cur.fetchall()
+zsum={}
+for sym in syms:
+  mark= ".".join(str(sym[0]).split('.')[1:])
+  if mark not in zsum:
+    zsum[mark]=[str(sym[0])]
+  else:
+    zsum[mark].append(str(sym[0]))
+print zsum
+#for key in zsum:
+#  if len(zsum[key])>1:
+    
+  
 
 con.commit()
 con.close()
