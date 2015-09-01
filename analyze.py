@@ -10,6 +10,8 @@ cur.execute("select sym from contracts")
 syms=cur.fetchall()
 zsum={}
 for sym in syms:
+  if '.' not in str(sym[0]):
+    continue
   mark= ".".join(str(sym[0]).split('.')[1:])
   if mark not in zsum:
     zsum[mark]=[str(sym[0])]
@@ -51,7 +53,22 @@ for line in sell_no_db:
   sell_no_c[sym]=int(line[2])
 for key in buy_yes:
   if buy_yes[key]+buy_no[key]<100:
-    print "Guaranteed profit of "+str((100-buy_yes[key]-buy_no[key])*(1.0-tax_rate))
+    print "Guaranteed profit of "+str((100-buy_yes[key]-buy_no[key])*(1.0-tax_rate)) +"by buying yes and no on "+key
+for mark in zsum:
+  print "Considering comboes of "+mark +" with stock"+str(zsum[mark])
+  price_yes=0.0
+  for stock in zsum[mark]:
+    price_yes=price_yes+buy_yes[stock]
+  if price_yes<100:
+    print "Guaranteed profit of "+str((100-price_yes)*(1.0-tax_rate))+"buying all yes on zero sum market "+mark
+  price_no=0.0
+  for stock in zsum[mark]:
+    price_no=price_no+buy_no[stock]
+  if price_no<(len(mark)-1)*100:
+    print "Guaranteed profit of "+str(((len(mark)-1)*100-price_no)*(1.0-tax_rate))+" buying all no on zero sum market "+mark
+  
+    
+  
   
 
 con.commit()
